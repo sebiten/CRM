@@ -1,13 +1,24 @@
 import { useState, useEffect } from "react";
 import Error from "./Error";
 
-const Formulario = ({ pacientes, setPacientes }) => {
+const Formulario = ({ pacientes, setPacientes, paciente }) => {
   const [nombre, setNombre] = useState("");
   const [propietario, setPropietario] = useState("");
   const [email, setEmail] = useState("");
   const [fecha, setFecha] = useState("");
   const [sintomas, setSintomas] = useState("");
   const [error, setError] = useState(false);
+  const [value, setValue] = useState("Agregar Paciente")
+
+  useEffect(()=> {
+   if (Object.keys(paciente).length > 0){
+    setNombre(paciente.nombre)
+    setPropietario(paciente.propietario)
+    setEmail(paciente.email)
+    setFecha(paciente.fecha)
+    setSintomas(paciente.sintomas)
+   }
+  },[paciente])
 
   
   const generarId= () => {
@@ -134,7 +145,7 @@ const Formulario = ({ pacientes, setPacientes }) => {
             htmlFor="alta"
             className="block text-gray-700 uppercase font-bold"
           >
-            Alta
+            Sintomas
           </label>
           <textarea
             id="sintomas"
@@ -147,7 +158,7 @@ const Formulario = ({ pacientes, setPacientes }) => {
         <input
           type="submit"
           className="background: bg-indigo-900 w-full p-3 text-white font-bold uppercase hover:bg-indigo-800 cursor-pointer transition-colors"
-          value="Agregar Paciente"
+          value={paciente.id ? 'Editar paciente' : 'Agregar paciente'}
         />
       </form>
     </div>
